@@ -65,6 +65,8 @@
 		}
 	});
 
+	
+
 	function desactivateComponent (cmp) {
 		cmp.classList.remove('component-active');
 		cmp.getElementsByClassName('component-url')[0].remove();
