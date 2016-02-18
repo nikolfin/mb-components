@@ -14,9 +14,12 @@
 		}
 	}
 
+
 	function toggleComponents(state) {
 
 		componentsList = Array.prototype.slice.call(document.querySelectorAll('.js-mb-component'));
+
+		chrome.runtime.sendMessage('refresh');
 
 		chrome.extension.onMessage.addListener(function (message) {
 
@@ -32,13 +35,16 @@
 
 			if (message.subj === 'urlsList') {
 				componentsList.forEach(function(component, i) {
-					if (state) {
-						activateComponent(component, i, message);
-					} else {
-						desactivateComponent(component);
-					}
+					activateComponent(component, i, message);
 				});
 			}
+
+			if (message === 'deactivate') {
+				componentsList.forEach(function(component) {
+					desactivateComponent(component);
+				});
+			}
+
 		});
 	}
 
@@ -58,14 +64,6 @@
 		spanEl.innerText = message.urls[i];
 	}
 
-	// шлем id-шники компонентов devtools
-	chrome.extension.onMessage.addListener(function (message) {
-		if (message === 'giveMeComponentsId') {
-	    	chrome.extension.sendMessage({ids: ids, subj: 'componentsList'});
-		}
-	});
-
-	
 
 	function desactivateComponent (cmp) {
 		cmp.classList.remove('component-active');

@@ -19,6 +19,11 @@
 	// });
 
 
+
+
+
+
+
 	// создаем порт для конекта с background
 	var port = chrome.extension.connect({
 			name: 'fromDevtools'
@@ -32,6 +37,8 @@
 	port.onMessage.addListener(function (message) {
 
 	    if (message.subj === 'componentsList') {
+
+	    	urls = [];
 
 	    	message.ids.forEach(function(id, i) {
 
@@ -48,6 +55,10 @@
 					}
 				);
 		   	});
+	    }
+
+	    if (message === 'refresh') {
+	    	port.postMessage('giveMeComponentsId');
 	    }
 	});
 
