@@ -39,9 +39,16 @@
 				});
 			}
 
+
 			if (message === 'deactivate') {
 				componentsList.forEach(function(component) {
 					desactivateComponent(component);
+				});
+			}
+
+			if (message === 'activate') {
+				componentsList.forEach(function(component) {
+					showComponent(component);
 				});
 			}
 
@@ -62,12 +69,21 @@
 		cmp.insertBefore(htmlOfCmpUrl, cmp.firstChild);
 
 		spanEl.innerText = message.urls[i];
+
+		cmp.firstChild.addEventListener('click', function() {
+			chrome.extension.sendMessage({id: this.parentElement.getAttribute('id'), subj: 'currentId'});
+		}, false);
+	}
+
+	function showComponent (cmp) {
+		cmp.classList.add('component-active');
+		cmp.getElementsByClassName('component-url')[0].style.display = 'inline-block';
 	}
 
 
 	function desactivateComponent (cmp) {
 		cmp.classList.remove('component-active');
-		cmp.getElementsByClassName('component-url')[0].remove();
+		cmp.getElementsByClassName('component-url')[0].style.display = 'none';
 	}
 
 	function addMultipleEventListeners(el, events, fn, bubbling) {

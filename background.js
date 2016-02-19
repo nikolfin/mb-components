@@ -17,7 +17,9 @@
 
         // проверка на открытие / закрытие devtools
         if (port.name === 'fromDevtools') {
-
+            if (openCount == 0) {
+                sendDataToContent('activate');
+            }
             openCount++;
 
             port.onDisconnect.addListener(function(port) {

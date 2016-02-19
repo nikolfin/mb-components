@@ -1,28 +1,6 @@
 (function() {
 
-	// chrome.devtools.panels.elements.createSidebarPane('Component Info', function (sidebar) {
-
-	// 	chrome.devtools.inspectedWindow.eval("(function() {return {url: Mb.ComponentManager.getComponentById('web-question-question_popular__0').url, data: Mb.ComponentManager.getComponentById('web-question-question_popular__0').getData(),params: Mb.ComponentManager.getComponentById('web-question-question_popular__0').getParams(), literals: Mb.ComponentManager.getComponentById('web-question-question_popular__0').getLiterals(), INIT_TYPE: Mb.ComponentManager.getComponentById('web-question-question_popular__0').INIT_TYPE}} ());", function(result, isException) {
-
-	// 		if (isException) {
-	// 			console.log( isException );
-	// 		}
-
-	// 		var title = result.url;
-
-	// 		title += result.INIT_TYPE === 0 ? ' | SERVER' : ' | CLIENT';
-
-	// 		sidebar.setObject(result, title);
-
-	// 	});
-
-	// });
-
-
-
-
-
-
+chrome.devtools.panels.elements.createSidebarPane('Component Info', function (sidebar) {
 
 	// создаем порт для конекта с background
 	var port = chrome.extension.connect({
@@ -60,6 +38,32 @@
 	    if (message === 'refresh') {
 	    	port.postMessage('giveMeComponentsId');
 	    }
+
+	    
+
+	    if (message.subj === 'currentId') {
+
+			
+
+				chrome.devtools.inspectedWindow.eval("(function() {return {url: Mb.ComponentManager.getComponentById('"+message.id+"').url, data: Mb.ComponentManager.getComponentById('"+message.id+"').getData(),params: Mb.ComponentManager.getComponentById('"+message.id+"').getParams(), literals: Mb.ComponentManager.getComponentById('"+message.id+"').getLiterals(), INIT_TYPE: Mb.ComponentManager.getComponentById('"+message.id+"').INIT_TYPE}} ());", function(result, isException) {
+
+					if (isException) {
+						console.log( isException );
+					}
+
+					var title = result.url;
+
+					title += result.INIT_TYPE === 0 ? ' | SERVER' : ' | CLIENT';
+
+					sidebar.setObject({});
+					sidebar.setObject(result, title);
+
+				});
+			
+	    }
 	});
+
+
+});
 
 }());
