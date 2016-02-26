@@ -1,8 +1,8 @@
 .component-active {
-	box-shadow: 0 0 2px 2px rgba(255, 106, 0, 0.4)!important;
+    outline: 1px solid #FF9433!important;
 }
 .component-active:hover {
-	box-shadow: 0 0 8px 4px rgba(255, 106, 0, 0.6)!important;
+    outline: 2px solid #FF7C05!important;
 }
 .component-url {
     font-size: 11px!important;

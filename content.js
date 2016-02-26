@@ -77,13 +77,13 @@
 
 	function showComponent (cmp) {
 		cmp.classList.add('component-active');
-		cmp.getElementsByClassName('component-url')[0].style.display = 'inline-block';
+		$('.component-url').css({'display': 'inline-block'});
 	}
 
 
 	function desactivateComponent (cmp) {
 		cmp.classList.remove('component-active');
-		cmp.getElementsByClassName('component-url')[0].style.display = 'none';
+		$('.component-url').hide();
 	}
 
 	function addMultipleEventListeners(el, events, fn, bubbling) {
